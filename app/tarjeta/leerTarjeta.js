@@ -4,20 +4,11 @@ import fs_extra from "fs-extra";
 
 export const leerTarjeta = async (ubicacion) => {
     try {
-        const existe = fs_extra.Dir(ubicacion);
+        const existeArchivo = fs_extra.pathExists(ubicacion);
 
-
-
-        if (!existe) {
-            console.log(
-                `
-                ╔═════════════════════════╗
-                ║     ⚠ ¡Peligro! ⚠       ║
-                ║                         ║
-                ║  Archivo No Encontrado  ║
-                ╚═════════════════════════╝
-                `
-            );
+    
+        if (!existeArchivo) {
+            throw new Error('Archivo no encontrado')
         }
 
         const data = await fs.readFile(ubicacion, 'utf-8');
@@ -40,6 +31,18 @@ export const leerTarjeta = async (ubicacion) => {
         return {idTarjeta,pinTarjeta};
 
     } catch (err) {
+
+        if (err.message === 'Archivo no encontrado') {
+            console.log(
+            `
+                ╔═════════════════════════╗
+                ║     ⚠ ¡Peligro! ⚠       ║
+                ║                         ║
+                ║  Archivo No Encontrado  ║
+                ╚═════════════════════════╝
+            `
+            );
+        }
         console.error('Error Desconocido en leerTarjeta()');
         console.error('Detalle: ', err);
     }
