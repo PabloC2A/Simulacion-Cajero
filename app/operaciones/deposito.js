@@ -13,18 +13,17 @@ function obtenerFecha() {
 export const deposito = async (monto, idTarjeta) => {
     try {
         if ((monto === 20) | (monto === 40) | (monto === 80) | (monto === 100)) {
-            const [rowsCliente] = await pool.query("SELECT t.idCliente FROM tarjeta t WHERE t.idTarjeta = ?;", [idTarjeta,]);
 
-            const idCliente = rowsCliente[0].idCliente;
+            const [dataCuenta] = await pool.query(
+                "SELECT c.idCuenta, c.saldoCuenta FROM cuenta c WHERE c.idCliente = (SELECT t.idCliente FROM tarjeta t WHERE t.idTarjeta = ?);",
+                [idTarjeta]
+            );
 
-            const [rowsCuenta] = await pool.query("SELECT c.idCuenta, c.saldoCuenta FROM cuenta c WHERE c.idCliente = 1;", [idCliente,]);
-
-            const idCuenta = rowsCuenta[0].idCuenta;
-            const saldoAnterior = rowsCuenta[0].saldoCuenta;
+            const idCuenta = dataCuenta[0].idCuenta;
+            const saldoAnterior = dataCuenta[0].saldoCuenta;
             const saldoActual = parseFloat(saldoAnterior)  + monto;
-
-            const [result] = await pool.query("UPDATE cuenta c SET c.saldoCuenta = ? WHERE c.idCliente = ?;", [saldoActual,idCliente]);
-
+            const [result] = await pool.query("UPDATE cuenta c SET c.saldoCuenta = ? WHERE c.idCuenta = ?;", [saldoActual, idCuenta]);
+            
             crearTransaccion(idTarjeta,idCuenta,'Deposito',obtenerFecha(),saldoAnterior,saldoActual);
             
         } else {

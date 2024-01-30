@@ -1,6 +1,8 @@
 import { autenticacionPin } from "./autenticacion/autenticacion.js";
 import { deposito } from "./operaciones/deposito.js";
+import { retiro } from "./operaciones/retirar.js";
 import { leerTarjeta } from "./tarjeta/leerTarjeta.js";
+import { consultaSaldo } from "./operaciones/consulta.js"
 import rl from "readline-sync";
 
 console.log(
@@ -117,6 +119,10 @@ if (autenticacion) {
           `
             );
 
+            const montoRetiro = rl.questionInt('-Ingrese un monto: ');
+
+            retiro(montoRetiro,tarjetaUsuario.idTarjeta);
+
             break;
 
         case 3:
@@ -130,7 +136,15 @@ if (autenticacion) {
           `
             );
 
+            const consulta = await consultaSaldo(tarjetaUsuario.idTarjeta);
 
+            console.log(
+              `
+            Usuario: ${consulta.nombreCliente}
+            Cuenta:  ${consulta.cuenta}
+            Saldo:   ${consulta.saldo}
+            `
+            );
 
             break;
 
