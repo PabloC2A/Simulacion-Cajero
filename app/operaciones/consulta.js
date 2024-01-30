@@ -29,5 +29,3 @@ export const consultaSaldo = async (idTarjeta) => {
         console.error("Detalle: ", err);
     }
 };
-
-consultaSaldo(1);

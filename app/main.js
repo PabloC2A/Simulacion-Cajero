@@ -3,7 +3,9 @@ import { deposito } from "./operaciones/deposito.js";
 import { retiro } from "./operaciones/retirar.js";
 import { leerTarjeta } from "./tarjeta/leerTarjeta.js";
 import { consultaSaldo } from "./operaciones/consulta.js"
+import { cambiarPin } from "./operaciones/cambiarPin.js";
 import rl from "readline-sync";
+
 
 console.log(
     `  
@@ -69,6 +71,10 @@ if (autenticacion) {
       ║   ╔═══════════════════╗        ╔═══════════════════════╗  ║ 
       ║   ║ 🔍 2. Retiro      ║        ║ 🔄 4. Transacciones   ║  ║ 
       ║   ╚═══════════════════╝        ╚═══════════════════════╝  ║ 
+      ║                                                           ║
+      ║                ╔════════════════════╗                     ║
+      ║                ║  🔄 5.Cambiar Pin  ║                     ║
+      ║                ╚════════════════════╝                     ║
       ║                                                           ║
       ╚═══════════════════════════════════════════════════════════╝
       `
@@ -159,6 +165,23 @@ if (autenticacion) {
           `
             );
 
+            break;
+
+        case 5:
+            console.log(
+                `
+          ╔═══════════════════════════════════════════╗
+          ║         Ｃａｍｂｉａｒ Ｐｉｎ           ║
+          ║                                           ║
+          ║                   🔄                      ║
+          ╚═══════════════════════════════════════════╝
+                  `
+            );
+
+
+            const nuevoPin = rl.question('-Ingrese su nuevo pin: ')
+
+            cambiarPin(tarjetaUsuario.idTarjeta, nuevoPin,)
             break;
 
         default:
