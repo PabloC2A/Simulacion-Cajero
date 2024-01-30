@@ -4,6 +4,7 @@ import { retiro } from "./operaciones/retirar.js";
 import { leerTarjeta } from "./tarjeta/leerTarjeta.js";
 import { consultaSaldo } from "./operaciones/consulta.js"
 import { cambiarPin } from "./operaciones/cambiarPin.js";
+import { historialTransacciones } from "./operaciones/historial.js"
 import rl from "readline-sync";
 
 
@@ -164,6 +165,9 @@ if (autenticacion) {
           ╚═══════════════════════════════════════════╝
           `
             );
+
+            await historialTransacciones(tarjetaUsuario.idTarjeta);
+            console.log('');
 
             break;
 
