@@ -8,4 +8,7 @@ SELECT t.idCliente FROM tarjeta t WHERE t.idTarjeta = ?;
 SELECT c.idCuenta FROM cuenta c WHERE c.idCliente = ?;
 
 --Actualizar SALDO de CUENTA segun el ID CLIENTE
-UPDATE cuenta c SET c.saldoCuenta = 1600 WHERE c.idCliente = ?;
+UPDATE cuenta c SET c.saldoCuenta = ? WHERE c.idCliente = ?;
+
+--Insertar Transaccion
+INSERT INTO transaccion (idTarjeta, idCuenta, operacion, fecha, saldoAnterior, saldoActual) VALUES (?,?,?,?,?,?);
