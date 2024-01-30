@@ -25,13 +25,18 @@ export const deposito = async (monto, idTarjeta) => {
 
             const [result] = await pool.query("UPDATE cuenta c SET c.saldoCuenta = ? WHERE c.idCliente = ?;", [saldoActual,idCliente]);
 
-            console.log(result)
-
-            //Crear Transaccion Deposito
             crearTransaccion(idTarjeta,idCuenta,'Deposito',obtenerFecha(),saldoAnterior,saldoActual);
             
         } else {
-            
+            console.log(
+            `
+                                ╔═════════════════════════╗
+                                ║           ⚠️             ║
+                                ║                         ║
+                                ║     Monto Incorrecto      ║
+                                ╚═════════════════════════╝
+            `
+            );
         }
     } catch (err) {
         console.error("Error Desconocido en autenticacionPin()");
