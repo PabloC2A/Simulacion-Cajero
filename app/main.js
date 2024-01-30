@@ -58,6 +58,7 @@ if (!autenticacionPin(tarjetaUsuario.idTarjeta, pinUsuario)) {
                             ╚═════════════════════════╝
     `
   );
+  process.exit(0);
 }
 
 console.log(
@@ -149,6 +150,6 @@ switch (opcionOperacion) {
     break;
 
   default:
-    
+
     break;
 }

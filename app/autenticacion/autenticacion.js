@@ -6,19 +6,15 @@ export const autenticacionPin = async (idTarjeta, pin) => {
       .promise()
       .query("SELECT t.pin FROM tarjeta t WHERE idTarjeta = ?;", [idTarjeta]);
 
-    if (rows.length > 0) {
-      // Compara el PIN almacenado en la base de datos con el PIN proporcionado
-      const pinDB = rows[0].pin;
-      const esPinCorrecto = pinDB === pin;
-
-      return esPinCorrecto;
-    } else {
-      // No se encontraron resultados para la tarjeta
-      return false;
+    if (rows.length < 0) {
+      throw new Error('');
     }
   } catch (err) {
     console.error("Error Desconocido en autenticacionPin()");
     console.error("Detalle: ", err);
-    throw err; // Puedes propagar el error o manejarlo según tu lógica de aplicación
   }
 };
+
+
+autenticacionPin(1,71937);
+

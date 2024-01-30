@@ -4,7 +4,9 @@ import fs_extra from "fs-extra";
 
 export const leerTarjeta = async (ubicacion) => {
     try {
-        const existe = fs_extra.pathExists(ubicacion);
+        const existe = fs_extra.Dir(ubicacion);
+
+
 
         if (!existe) {
             console.log(
